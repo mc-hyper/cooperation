@@ -25,14 +25,19 @@
       padding: 0;
     }
 
-    .top-navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 30px;
-      background: #0f1115;
-      border-bottom: 2px solid var(--accent);
-    }
+.top-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Тонкое меню: меньше отступы сверху/снизу и по краям */
+  padding: 10px 30px;
+  background: #181818;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
 
     .logo {
       font-size: 1.5rem;
