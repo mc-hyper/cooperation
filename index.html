@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Сотрудничество | HYPER</title>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+  <header class="top-navbar">
+    <div class="logo">HY<span>PER</span></div>
+    <nav class="nav-links">
+      <a href="rules.html">Правила</a>
+      <a href="support.html">Поддержка</a>
+      <a href="cooperation.html" style="color:var(--accent)">Сотрудничество</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- Главный экран -->
+    <section class="card cooperation-hero">
+      <h2>🤝 Сотрудничество </h2>
+      <p class="text-muted">Ищем новых MEDIA партнеров</p>
+      <div class="benefits-grid">
+        <div class="benefit-item">
+          <h3>📣 Реклама на нашем сервере</h3>
+          <p>Баннер в лобби, упоминание в чате, пост в Discord.</p>
+        </div>
+        <div class="benefit-item">
+          <h3>📣 Помощь в записи роликов и оплата</h3>
+         <p>Будем выдавать донат для роликов а также наша команда будет помогать вам записывать ролики</p>
+        </div>
+        <div class="benefit-item">
+          <h3>🎮 Именные ивенты</h3>
+          <p>Сделаем ивенты от имени вашего канала.</p>
+        </div>
+        <div class="benefit-item">
+          <h3>⚙️ Техническая помощь</h3>
+          <p>Поможем с трудными вопросами</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Условия -->
+    <section class="card cooperation-section">
+      <h2>📌 Условия сотрудничества</h2>
+      <ul class="rules-list">
+        <li>От 150 подписчиков на YouTube или 1250 подписчиков на TikTok</li>
+        <li>Отсутствие токсичности, читов, рекламы сомнительных проектов.</li>
+        <li>Активность, грамотность</li>
+        <li>Наличие аккаунта на HyperID</li>
+      </ul>
+    </section>
+
+    <!-- Форма заявки -->
+    <section class="card cooperation-section">
+      <h2>📝 Подать заявку на сотрудничество</h2>
+      <p class="text-muted">Заполни форму. Мы рассмотрим заявку в течение 3–5 рабочих дней.</p>
+
+      <form id="coopForm">
+        <div class="form-group">
+          <label>Ваш Никнейм</label>
+          <input type="text" id="Nick" placeholder="Например: Steve" required>
+        </div>
+        <div class="form-group">
+          <label>Ссылка на аккаунт TikTok/Youtube </label>
+          <input type="text" id="serverIp" placeholder="" required>
+        </div>
+        <div class="form-group">
+          <label>Твой Discord (ссылка или ник)</label>
+          <input type="text" id="discordLink" placeholder="https://discord.gg/..." required>
+        </div>
+        <div class="form-group">
+          <label>Твой VK (Ссылка)</label>
+          <input type="text" id="VKLink" placeholder="https://vk.ru/..." required>
+        </div> 
+        <div class="form-group">
+          <label>Опишите свой опыт а также ваш контент</label>
+          <textarea id="serverDesc" rows="4" placeholder="" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Отправить заявку</button>
+      </form>
+
+      <div id="coopStatusMsg" class="status-msg"></div>
+    </section>
+
+  <!-- Webhook URL — только для теста! В продакшене лучше через бэкенд -->
+  <script>
+    const DISCORD_WEBHOOK_URL = 'https://discordapp.com/api/webhooks/1542546159980249169/1B91tnObQmOCW_ftFpXA6yiaO2qinP-0Ilw9mObHJkDH77wmTkfSAr5KH-wFEdI2lFc3'; 
+
+    document.getElementById('coopForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const statusMsg = document.getElementById('coopStatusMsg');
+      statusMsg.textContent = 'Отправка заявки...';
+      statusMsg.className = 'status-msg';
+
+      const serverName = document.getElementById('serverName').value.trim();
+      const serverIp = document.getElementById('serverIp').value.trim();
+      const discordLink = document.getElementById('discordLink').value.trim();
+      const serverDesc = document.getElementById('serverDesc').value.trim();
+
+      const embed = {
+        username: 'Заявка на сотрудничество',
+        avatar_url: 'https://crafatar.com/avatars/Steve?size=128',
+        embeds: [{
+          title: '🆕 Новая заявка: ' + serverName,
+          color: 5793266,
+          fields: [
+            { name: 'IP сервера', value: '`' + serverIp + '`', inline: true },
+            { name: 'Discord', value: discordLink, inline: true }
+          ],
+          description: serverDesc,
+          footer: { text: 'HYPER Server Cooperation' },
+          timestamp: new Date().toISOString()
+        }]
+      };
+
+      try {
+        const res = await fetch(DISCORD_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(embed)
+        });
+
+        if (res.ok) {
+          statusMsg.textContent = '✅ Заявка успешно отправлена! Мы свяжемся с тобой в Discord.';
+          statusMsg.className = 'status-msg success';
+          document.getElementById('coopForm').reset();
+        } else {
+          throw new Error('Ошибка отправки');
+        }
+      } catch (err) {
+        console.error(err);
+        statusMsg.textContent = '❌ Не удалось отправить заявку. Попробуй позже или напиши напрямую в Discord.';
+        statusMsg.className = 'status-msg error';
+      }
+    });
+  </script>
+</body>
+</html>
