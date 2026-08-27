@@ -116,6 +116,11 @@
       color: var(--accent);
       font-size: 1.2rem;
     }
+    .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 
     /* Сетка выгод */
     .benefits-grid {
@@ -211,13 +216,16 @@
   </style>
 </head>
 <body>
-  <header class="top-navbar">
+ <header class="top-navbar">
     <div class="logo">HY<span>PER</span></div>
-    <nav class="nav-links">
-      <!-- Оставляем только ссылку на главную, если есть, или ничего -->
-      <a href="/">Главная</a>
-    </nav>
-  </header>
+    <div class="nav-center">Сотрудничество</div>
+    <div class="nav-right">
+      <a href="https://mc-hyper.github.io/complaints/" class="btn-nav">Жалоба</a>
+      <a href="https://mc-hyper.github.io/rules/" class="btn-nav">Правила</a>
+      <a href="https://mc-hyper.github.io/admins/" class="btn-nav">Персонал</a>
+      <a href="https://hyper-donate.easydonate.ru" class="btn-donate">Донат</a>
+    </div>
+  </header
 
   <div class="container">
     <!-- Блок выгод -->
