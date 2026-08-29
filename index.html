@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Сотрудничество с блогерами | HYPER</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg-body: #121212;
+      --bg-card: #1e1e1e;
+      --bg-modal: #2c2c2c;
+
+      --text-main: #ffffff;
+      --text-secondary: #a0a0a0;
+
+      --accent-blue: #3b82f6;
+      --accent-blue-hover: #2563eb;
+
+      --border-color: #333333;
+      --border-dashed: #444444;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      margin: 0;
+      padding: 0;
+    }
+
+    .top-navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 30px;
+      background: #181818;
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+    .logo span { color: var(--accent-blue); }
+
+    .nav-center {
+      color: var(--text-main);
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-nav {
+      display: inline-block;
+      padding: 8px 18px;
+      background-color: transparent;
+      color: var(--text-main);
+      text-decoration: none;
+      border: 1px solid var(--accent-blue);
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .btn-nav:hover {
+      background-color: rgba(59, 130, 246, 0.15);
+      color: var(--accent-blue);
+      border-color: var(--accent-blue);
+    }
+
+    .btn-donate {
+      display: inline-block;
+      background-color: var(--accent-blue);
+      color: white !important;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-donate:hover { 
+      background-color: var(--accent-blue-hover); 
+      transform: scale(1.02);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h2.section-title {
+      font-size: 1.2rem;
+      color: var(--text-main);
+      margin-bottom: 20px;
+      padding-left: 5px;
+      border-left: 4px solid var(--accent-blue);
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .benefit-item {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 20px;
+      border: 2px dashed var(--border-dashed); 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: transform 0.2s, border-color 0.2s;
+      text-align: center;
+    }
+    .benefit-item:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-blue);
+    }
+    .benefit-item h3 {
+      margin: 0 0 10px;
+      color: var(--accent-blue);
+      font-size: 1rem;
+    }
+    .benefit-item p {
+      margin: 0;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    ul.rules-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    ul.rules-list li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 14px;
+      color: var(--text-main);
+    }
+    ul.rules-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent-blue);
+      font-size: 1.2rem;
+    }
+
+    .form-group { margin-bottom: 15px; }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--text-main);
+      font-weight: 600;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      box-sizing: border-box;
+      background: #2c2c2c;
+      color: white;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--accent-blue);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .submit-btn:hover { background: var(--accent-blue-hover); }
+
+    .status-msg {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .status-msg.success { color: #4ade80; }
+    .status-msg.error { color: #f87171; }
+
+    @media (max-width: 768px) {
+      .top-navbar { flex-direction: column; align-items: stretch; gap: 12px; padding: 10px; }
+      .nav-center { display: none; }
+      .nav-right { width: 100%; justify-content: space-around; flex-wrap: wrap; }
+      .benefits-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-navbar">
+    <div class="logo">HY<span>PER</span></div>
+    <div class="nav-center">Сотрудничество</div>
+    <nav class="nav-right">
+      <a href="/" class="btn-nav">Главная</a>
+      <a href="admins/" class="btn-nav">Персонал</a>
+      <a href="support/" class="btn-nav">Поддержка</a>
+      <a href="rules/" class="btn-nav">Правила</a>
+      <a href="#" class="btn-donate">Донат</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2 class="section-title">Преимущества для блогеров</h2>
+    <div class="benefits-grid">
+      <div class="benefit-item">
+        <h3>🎬 Приоритетный доступ</h3>
+        <p>Отдельный мир/аккаунт для съёмки, чтобы не мешать онлайну.</p>
+      </div>
+      <div class="benefit-item">
+        <h3>📢 Промо от сервера</h3>
+        <p>Упоминание в Discord, баннеры в лобби, репосты твоих роликов.</p>
+      </div>
+      <div class="benefit-item">
+        <h3>⚙️ Техническая помощь</h3>
+        <p>Подскажем по LuckPerms, плагинам, оптимизации Purpur.</p>
+      </div>
+    </div>
+
+    <h2 class="section-title" style="margin-top:40px;">Условия для блогеров</h2>
+    <ul class="rules-list">
+      <li>Тематика контента — Minecraft (желательно наш сервер).</li>
+      <li>Минимум 1 ролик/пост в месяц с упоминанием HYPER.</li>
+      <li>Соблюдение правил сервера и отсутствие токсичности.</li>
+      <li>Наличие Discord и готовность общаться с командой.</li>
+    </ul>
+
+    <h2 class="section-title" style="margin-top:40px;">Подать заявку</h2>
+    <p style="color:var(--text-secondary); margin-bottom:25px;">
+      Заполни форму. Мы ответим в течение 3–5 рабочих дней.
+    </p>
+
+    <form id="coopForm">
+      <div class="form-group">
+        <label>Твой ник в Minecraft</label>
+        <input type="text" id="mcNick" placeholder="Alex_Main" required maxlength="16">
+      </div>
+
+      <div class="form-group">
+        <label>Имя канала / профиль</label>
+        <input type="text" id="channelName" placeholder="Например: AlexCraft YT" required>
+      </div>
+
+      <div class="form-group">
+        <label>Ссылка на канал (YouTube, TikTok, VK)</label>
+        <input type="url" id="channelLink" placeholder="https://youtube.com/..." required>
+      </div>
+
+      <div class="form-group">
+        <label>Среднее количество просмотров / подписчиков</label>
+        <input type="text" id="stats" placeholder="Например: 500 просмотров, 1.2K подписчиков" required>
+      </div>
+
+      <div class="form-group">
+        <label>Описание твоего контента</label>
+        <textarea id="description" rows="4" placeholder="Что ты снимаешь, какой стиль, какая аудитория..." required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Отправить заявку</button>
+    </form>
+
+    <div id="coopStatusMsg" class="status-msg"></div>
+
+    <h2 class="section-title" style="margin-top:40px;">Частые вопросы</h2>
+    <ul class="rules-list">
+      <li><strong>Можно ли без большого количества подписчиков?</strong> Да, если у тебя качественный контент и стабильная активность.</li>
+      <li><strong>Что если я снимаю не только наш сервер?</strong> Это нормально. Главное — регулярно упоминать HYPER.</li>
+      <li><strong>Как мы будем взаимодействовать?</strong> Через Discord‑канал для блогеров и общий чат с админами.</li>
+      <li><strong>Есть ли бонусы за просмотры?</strong> Да: при достижении порога можем выдать уникальный префикс через LuckPerms.</li>
+    </ul>
+  </div>
+
+  <script>
+    // ВСТАВЬ СЮДА СВОЙ DISCORD WEBHOOK URL
+    const DISCORD_WEBHOOK_URL = 'ВСТАВЬ_СЮДА_URL_WEBHOOK';
+
+    document.getElementById('coopForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const statusMsg = document.getElementById('coopStatusMsg');
+      statusMsg.textContent = 'Отправка заявки...';
+      statusMsg.className = 'status-msg';
+
+      const mcNick = document.getElementById('mcNick').value.trim();
+      const channelName = document.getElementById('channelName').value.trim();
+      const channelLink = document.getElementById('channelLink').value.trim();
+      const stats = document.getElementById('stats').value.trim();
+      const description = document.getElementById('description').value.trim();
+
+      // ВАЖНО: Здесь нет username и avatar_url!
+      // Теперь сообщение придёт ОТ ИМЕНИ ВЕБХУКА (как настроено в Discord)
+      const embed = {
+        embeds: [{
+          title: '🆕 Новая заявка на сотрудничество: ' + channelName,
+          color: 4281918, // Синий цвет эмбеда
+          fields: [
+            { name: 'Minecraft‑ник', value: '`' + mcNick + '`', inline: true },
+            { name: 'Ссылка на канал', value: channelLink, inline: true },
+            { name: 'Статистика', value: stats, inline: false },
+          ],
+          description: description,
+          footer: { text: 'HYPER Server Cooperation' },
+          timestamp: new Date().toISOString()
+        }]
+      };
+
+      try {
+        const res = await fetch(DISCORD_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(embed)
+        });
+
+        if (res.ok) {
+          statusMsg.textContent = '✅ Заявка успешно отправлена! Мы свяжемся с тобой в Discord.';
+          statusMsg.className = 'status-msg success';
+          document.getElementById('coopForm').reset();
+        } else {
+          throw new Error('Ошибка отправки');
+        }
+      } catch (err) {
+        console.error(err);
+        statusMsg.textContent = '❌ Не удалось отправить заявку. Попробуй позже или напиши напрямую в Discord.';
+        statusMsg.className = 'status-msg error';
+      }
+    });
+  </script>
+</body>
+</html>
