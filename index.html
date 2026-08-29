@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>HYPER | Minecraft Server</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #0f1115;
+      --card: #1f2937;
+      --text: #f9fafb;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --success: #4ade80;
+      --muted: #94a3b8;
+      --border: #334155;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      margin: 30px auto;
+      padding: 0 20px;
+      flex: 1;
+    }
+
+    /* Карточки-блоки */
+    .card {
+      background: var(--card);
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: var(--accent);
+      /* фирменная пунктирная линия */
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: 10px;
+    }
+
+    p, li {
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .text-muted {
+      color: var(--muted);
+    }
+
+    /* Сетка центральных кнопок (вместо верхнего меню) */
+    .center-action-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 25px;
+    }
+
+    .action-btn-card {
+      padding: 24px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      /* обводка вокруг каждой кнопки-карточки */
+      border: 1px solid transparent;
+    }
+
+    .action-btn-card:hover {
+      transform: translateY(-4px);
+      background: rgba(59, 130, 246, 0.12);
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+    }
+
+    .action-btn-card h3 {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-size: 1.2rem;
+    }
+
+    .action-btn-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Кнопка «Копировать IP» с обводкой */
+    .copy-ip-btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--accent);
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .copy-ip-btn:hover {
+      border-color: var(--accent);
+      color: white;
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .ip-block {
+      font-family: monospace;
+      font-size: 1.4rem;
+      color: var(--success);
+      background: #2c3343;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      text-align: center;
+      word-break: break-all;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    /* Блок особенностей — в том же стиле карточек */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .feature-item {
+      padding: 18px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 8px;
+      border: 1px solid #334155;
+      text-align: center;
+    }
+    .feature-item h3 {
+      margin: 0 0 6px;
+      color: var(--accent);
+    }
+    .feature-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* Статус сервера */
+    .status-list {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 0;
+    }
+    .status-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid #334155;
+      display: flex;
+      justify-content: space-between;
+    }
+    .status-list li:last-child {
+      border-bottom: none;
+    }
+
+    @media (max-width: 600px) {
+      .center-action-grid, .feature-grid {
+        grid-template-columns: 1fr;
+      }
+      .container {
+        margin: 20px auto;
+        padding: 0 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Приветствие и IP -->
+    <section class="card">
+      <h2>👋 Добро пожаловать на HYPER</h2>
+      <p class="text-muted">
+        Гриферское выживание 1.20.1+ на ядре Purpur. Уникальные механики, защита регионов, кланы и донатные привилегии. Присоединяйся к нашему сообществу!
+      </p>
+
+      <div class="ip-block">play.hyper-mc.ru</div>
+      <button class="copy-ip-btn" onclick="
+        navigator.clipboard.writeText('play.hyper-mc.ru').then(() => {
+          const btn = document.querySelector('.copy-ip-btn');
+          const original = btn.innerText;
+          btn.innerText = 'Скопировано!';
+          setTimeout(() => btn.innerText = original, 2000);
+        });
+      ">Копировать IP</button>
+    </section>
+
+    <!-- Центральные кнопки-действия (вместо верхней панели) -->
+    <section class="card">
+      <h2>⚡ Быстрые действия</h2>
+      <p class="text-muted">Выбери, куда перейти прямо сейчас.</p>
+      <div class="center-action-grid">
+        <div class="action-btn-card" onclick="window.location.href='/launcher'">
+          <h3>🚀 Лаунчер</h3>
+          <p>Автоустановка ресурспака и конфигов.</p>
+        </div>
+        <div class="action-btn-card" onclick="window.location.href='/donate'">
+          <h3>💎 Донат</h3>
+          <p>Привилегии, кейсы и уникальные предметы.</p>
+        </div>
+        <div class="action-btn-card" onclick="window.open('https://discord.gg/ТВОЙ_ДИСКОРД', '_blank')">
+          <h3>💬 Discord</h3>
+          <p>Общайся, следи за новостями.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Особенности сервера -->
+    <section class="card">
+      <h2>🛠️ Особенности HYPER</h2>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <h3>🗺️ Защита регионов</h3>
+          <p>WorldGuard + WorldEdit. Строй без страха грифа.</p>
+        </div>
+        <div class="feature-item">
+          <h3>🎭 Роли и префиксы</h3>
+          <p>LuckPerms + DeluxeChat. Красивые префиксы и градиенты.</p>
+        </div>
+        <div class="feature-item">
+          <h3>🤖 NPC и квесты</h3>
+          <p>Citizens. Интерактивные NPC, магазины и задания.</p>
+        </div>
+        <div class="feature-item">
+          <h3>⚡ Оптимизация</h3>
+          <p>Ядро Purpur. Высокий TPS и стабильная работа.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Статус сервера -->
+    <section class="card">
+      <h2>📊 Статус сервера</h2>
+      <ul class="status-list">
+        <li>
+          <span>🟢 Сервер</span>
+          <strong style="color:var(--success)">Онлайн</strong>
+        </li>
+        <li>
+          <span>⚙️ Версия</span>
+          <strong>1.20.1 – Актуальная Версия</strong>
+        </li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>
